@@ -21,18 +21,6 @@ QNotePadEditor::QNotePadEditor(QWidget *parent) :
     init_settings_form();
     init_highlight_current_line();
     refreshWindowName();
-
-    //TODO:
-    // 1) document autosave
-    // 2) settings save/load
-    // 3) About
-    // 4) line number
-    // 5) line highlight
-    // 6) redesign colors section
-    // 7) add highligtedText color button
-    // 8) text colored selection
-    // 9) bold, italic, underline text
-    // 10) ask about save when exit
 }
 
 QNotePadEditor::~QNotePadEditor()

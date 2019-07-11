@@ -14,6 +14,7 @@ Settings::Settings(QWidget *parent) :
 
     this->setWindowTitle("Settings");
     this->setFixedSize(this->size());
+    ui->settings_toolBox->setCurrentIndex(0);
 
     init_settings_form();
     refreshAll();
@@ -136,8 +137,12 @@ void Settings::refreshFontSectionColor() {
     utils::setButtonBackgroundColor(current_context_.text_color,ui->textColorButton);
     utils::setButtonBackgroundColor(current_context_.selection_color,ui->selectionColorButton);
     utils::setButtonBackgroundColor(current_context_.editor_background_color,ui->TextEditBackgroundColorButton);
+
     ui->lineSelectionColorPushButton->setEnabled(current_context_.check_boxes_state.enable_current_line_hihglight);
-    utils::setButtonBackgroundColor(current_context_.current_line_highlighting_selection_color,ui->lineSelectionColorPushButton);
+    if (ui->lineSelectionColorPushButton->isEnabled())
+        utils::setButtonBackgroundColor(current_context_.current_line_highlighting_selection_color,ui->lineSelectionColorPushButton);
+    else
+        utils::setButtonBackgroundColor(QColor(Qt::lightGray).lighter(100),ui->lineSelectionColorPushButton);
 }
 
 

@@ -23,6 +23,7 @@ struct SettingsContext {
     QColor text_color;
     QColor selection_color;
     QColor editor_background_color;
+    QColor current_line_highlighting_selection_color;
 
     CheckBoxesState check_boxes_state;
 

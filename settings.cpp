@@ -39,6 +39,7 @@ void Settings::LineNumberCheckStateChanged(int) {
 
 void Settings::HighlightLineCheckStateChanged(int) {
     current_context_.check_boxes_state.enable_current_line_hihglight = ui->HighlightCurrentLineCheckBox->isChecked();
+    refreshFontSectionColor();
 }
 
 void Settings::FontButtonClick() {
@@ -66,10 +67,18 @@ void Settings::SelectionColorButtonClick() {
     }
 }
 
-void Settings::EditorBackgroundColorButton() {
+void Settings::EditorBackgroundColorButtonClick() {
     QColor background_color = QColorDialog::getColor(current_context_.selection_color,this,"Editor background color");
     if (background_color.isValid()) {
         current_context_.editor_background_color = background_color;
+        refreshFontSectionColor();
+    }
+}
+
+void Settings::CurrentLineHighlightColorButtonClick() {
+    QColor background_color = QColorDialog::getColor(current_context_.selection_color,this,"Current line selection background color");
+    if (background_color.isValid()) {
+        current_context_.current_line_highlighting_selection_color = background_color;
         refreshFontSectionColor();
     }
 }
@@ -99,7 +108,8 @@ void Settings::init_settings_form() {
 
     connect(ui->textColorButton,&QPushButton::clicked,this,&Settings::TextColorButtonClick);
     connect(ui->selectionColorButton,&QPushButton::clicked,this,&Settings::SelectionColorButtonClick);
-    connect(ui->TextEditBackgroundColorButton,&QPushButton::clicked,this,&Settings::EditorBackgroundColorButton);
+    connect(ui->TextEditBackgroundColorButton,&QPushButton::clicked,this,&Settings::EditorBackgroundColorButtonClick);
+    connect(ui->lineSelectionColorPushButton,&QPushButton::clicked,this,&Settings::CurrentLineHighlightColorButtonClick);
 
     connect(ui->applyButton,&QPushButton::clicked,this,&Settings::ApplyChanges);
     connect(ui->cancelButton,&QPushButton::clicked,this,&Settings::CancelChanges);
@@ -126,6 +136,8 @@ void Settings::refreshFontSectionColor() {
     utils::setButtonBackgroundColor(current_context_.text_color,ui->textColorButton);
     utils::setButtonBackgroundColor(current_context_.selection_color,ui->selectionColorButton);
     utils::setButtonBackgroundColor(current_context_.editor_background_color,ui->TextEditBackgroundColorButton);
+    ui->lineSelectionColorPushButton->setEnabled(current_context_.check_boxes_state.enable_current_line_hihglight);
+    utils::setButtonBackgroundColor(current_context_.current_line_highlighting_selection_color,ui->lineSelectionColorPushButton);
 }
 
 

@@ -28,7 +28,8 @@ public slots:
 
     void TextColorButtonClick();
     void SelectionColorButtonClick();
-    void EditorBackgroundColorButton();
+    void EditorBackgroundColorButtonClick();
+    void CurrentLineHighlightColorButtonClick();
 
     void ApplyChanges();
     void CancelChanges();

@@ -38,6 +38,7 @@ QNotePadEditor::~QNotePadEditor()
 {
     delete ui;
     delete settings_;
+    delete lineNumberWidget_;
 }
 
 void QNotePadEditor::connect_menu_actions() {
@@ -75,6 +76,12 @@ void QNotePadEditor::init_settings_form() {
     connect(settings_,&Settings::newContextApplied,this,&QNotePadEditor::onSettingsContextChanged);
 }
 
+void QNotePadEditor::init_line_numbers_widget() {
+    lineNumberWidget_ = new LineNumberWidget(ui->textEdit);
+
+    connect(ui->textEdit,&QTextEdit::textChanged,this,&QNotePadEditor::onTextChanged);
+}
+
 void QNotePadEditor::closeEvent(QCloseEvent *event) {
     QMessageBox::Button button = QMessageBox::question(this,"Exit","Do you want to quit?");
     if (button == QMessageBox::Button::Yes) {
@@ -82,6 +89,14 @@ void QNotePadEditor::closeEvent(QCloseEvent *event) {
     } else {
         event->ignore();
     }
+}
+
+void QNotePadEditor::resizeEvent(QResizeEvent *event) {
+
+}
+
+void QNotePadEditor::LineNumberWidgetPaintEvent(QPaintEvent *event) {
+
 }
 
 void QNotePadEditor::refreshWindowName() {
@@ -172,4 +187,10 @@ void QNotePadEditor::onSettingsContextChanged(const SettingsContext &context) {
     ui->textEdit->setPalette(palette);
 
     checkboxes_state_ = context.check_boxes_state;
+}
+
+void QNotePadEditor::onTextChanged() {
+    QString text = ui->textEdit->toPlainText();
+    int numLines = utils::countTextLines(text);
+    lineNumberWidget_->updateNumber(numLines);
 }

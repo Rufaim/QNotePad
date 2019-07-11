@@ -46,3 +46,8 @@ void utils::setButtonBackgroundColor(const QColor &color, QPushButton* button) {
     text_style = text_style.arg(text_color);
     button->setStyleSheet(text_style);
 }
+
+int utils::countTextLines(const QString &text) {
+    int numLines = text.split("\n").size();
+    return numLines;
+}

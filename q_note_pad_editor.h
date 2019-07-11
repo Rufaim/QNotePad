@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "settings.h"
+#include "line_number_widget.h"
 
 namespace Ui {
 class QNotePadEditor;
@@ -18,6 +19,9 @@ public:
     ~QNotePadEditor();
 
     void closeEvent(QCloseEvent *event);
+    void resizeEvent(QResizeEvent *event);
+
+    void LineNumberWidgetPaintEvent(QPaintEvent *event);
 
 public slots:
     // File menu actions
@@ -41,14 +45,17 @@ public slots:
 
     //other slots
     void onSettingsContextChanged(const SettingsContext &context);
+    void onTextChanged();
 
 private:
     void connect_menu_actions();
     void init_settings_form();
+    void init_line_numbers_widget();
     void refreshWindowName();
 
     Ui::QNotePadEditor *ui;
     Settings* settings_;
+    LineNumberWidget* lineNumberWidget_;
 
     QString file_path_;
     CheckBoxesState checkboxes_state_;

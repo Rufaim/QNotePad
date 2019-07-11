@@ -19,6 +19,7 @@ QNotePadEditor::QNotePadEditor(QWidget *parent) :
 
     connect_menu_actions();
     init_settings_form();
+    init_highlight_current_line();
     refreshWindowName();
 
     //TODO:
@@ -69,10 +70,18 @@ void QNotePadEditor::init_settings_form() {
     init_context.text_color = pallete.text().color();
     init_context.selection_color = pallete.highlight().color();
     init_context.editor_background_color = pallete.base().color();
+    // !!
+    init_context.current_line_highlighting_selection_color = QColor(Qt::yellow).lighter(100);
+    init_context.check_boxes_state = settings_context_.check_boxes_state;
     settings_->setSettingsContext(init_context);
     onSettingsContextChanged(init_context);
 
     connect(settings_,&Settings::newContextApplied,this,&QNotePadEditor::onSettingsContextChanged);
+}
+
+void QNotePadEditor::init_highlight_current_line() {
+    connect(ui->textEdit,&QTextEdit::cursorPositionChanged, this, &QNotePadEditor::highlightCurrentLine);
+    highlightCurrentLine();
 }
 
 void QNotePadEditor::closeEvent(QCloseEvent *event) {
@@ -164,12 +173,28 @@ void QNotePadEditor::About() {
 }
 
 void QNotePadEditor::onSettingsContextChanged(const SettingsContext &context) {
-    ui->textEdit->setFont(context.font);
+    settings_context_ = context;
+
+    ui->textEdit->setFont(settings_context_.font);
     QPalette palette = ui->textEdit->palette();
-    palette.setColor(QPalette::Text,context.text_color);
-    palette.setColor(QPalette::Highlight, context.selection_color);
-    palette.setColor(QPalette::Base,context.editor_background_color);
+    palette.setColor(QPalette::Text,settings_context_.text_color);
+    palette.setColor(QPalette::Highlight, settings_context_.selection_color);
+    palette.setColor(QPalette::Base,settings_context_.editor_background_color);
     ui->textEdit->setPalette(palette);
 
-    checkboxes_state_ = context.check_boxes_state;
+    highlightCurrentLine();
+}
+
+void QNotePadEditor::highlightCurrentLine() {
+    QList<QTextEdit::ExtraSelection> extraSelection;
+
+    if(!ui->textEdit->isReadOnly() && settings_context_.check_boxes_state.enable_current_line_hihglight) {
+        QTextEdit::ExtraSelection selection;
+        selection.format.setBackground(settings_context_.current_line_highlighting_selection_color);
+        selection.format.setProperty(QTextFormat::FullWidthSelection,true);
+        selection.cursor = ui->textEdit->textCursor();
+        selection.cursor.clearSelection();
+        extraSelection.append(selection);
+    }
+    ui->textEdit->setExtraSelections(extraSelection);
 }

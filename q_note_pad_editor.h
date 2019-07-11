@@ -41,17 +41,19 @@ public slots:
 
     //other slots
     void onSettingsContextChanged(const SettingsContext &context);
+    void highlightCurrentLine();
 
 private:
     void connect_menu_actions();
     void init_settings_form();
+    void init_highlight_current_line();
     void refreshWindowName();
 
     Ui::QNotePadEditor *ui;
     Settings* settings_;
 
     QString file_path_;
-    CheckBoxesState checkboxes_state_;
+    SettingsContext settings_context_;
 
     const QString editor_name_ = "QNotePad";
 };

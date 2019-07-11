@@ -92,6 +92,9 @@ void Settings::init_settings_form() {
 
     previous_context_ = current_context_;
 
+    connect(ui->HighlightCurrentLineCheckBox,&QCheckBox::stateChanged,this,&Settings::HighlightLineCheckStateChanged);
+    connect(ui->lineNumberCheckBox,&QCheckBox::stateChanged,this,&Settings::LineNumberCheckStateChanged);
+
     connect(ui->FontButton,&QPushButton::clicked,this,&Settings::FontButtonClick);
 
     connect(ui->textColorButton,&QPushButton::clicked,this,&Settings::TextColorButtonClick);

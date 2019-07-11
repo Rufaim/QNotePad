@@ -4,15 +4,15 @@ QNotePad is a text editor fully written on Qt.
 
 ![screenshot_2019_07_11](images/QNotePad_screenshot_2019_07_11.png)
 
-Build notes
+## Build notes
 _______
 
-### Clone repo
+#### Clone repo
 
     $ git clone https://github.com/Rufaim/QNotePad.git
     $ cd QNotePad
 
-### Qt
+#### Qt
 
 This software was tested on Qt 5.13.
 

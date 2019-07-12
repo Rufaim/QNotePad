@@ -7,6 +7,7 @@ About::About(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedSize(this->size());
+    this->setWindowTitle("About");
 }
 
 About::~About()

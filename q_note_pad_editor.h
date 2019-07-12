@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "settings.h"
+#include "about.h"
 
 namespace Ui {
 class QNotePadEditor;
@@ -37,7 +38,7 @@ public slots:
     void callSettings();
 
     // about menu action
-    void About();
+    void About_menu();
 
     //other slots
     void onSettingsContextChanged(const SettingsContext &context);
@@ -51,6 +52,7 @@ private:
 
     Ui::QNotePadEditor *ui;
     Settings* settings_;
+    About* about_;
 
     QString file_path_;
     SettingsContext settings_context_;

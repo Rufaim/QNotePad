@@ -20,6 +20,7 @@ QNotePadEditor::QNotePadEditor(QWidget *parent) :
     connect_menu_actions();
     init_settings_form();
     init_highlight_current_line();
+    about_ = new About();
     refreshWindowName();
 }
 
@@ -27,6 +28,7 @@ QNotePadEditor::~QNotePadEditor()
 {
     delete ui;
     delete settings_;
+    delete about_;
 }
 
 void QNotePadEditor::connect_menu_actions() {
@@ -44,7 +46,7 @@ void QNotePadEditor::connect_menu_actions() {
     connect(ui->actionSelect_All, &QAction::triggered,this,&QNotePadEditor::SelectAll);
     connect(ui->actionSettings, &QAction::triggered,this,&QNotePadEditor::callSettings);
 
-    connect(ui->actionAbout, &QAction::triggered,this,&QNotePadEditor::About);
+    connect(ui->actionAbout, &QAction::triggered,this,&QNotePadEditor::About_menu);
 }
 
 void QNotePadEditor::init_settings_form() {
@@ -156,8 +158,8 @@ void QNotePadEditor::callSettings() {
     settings_->show();
 }
 
-void QNotePadEditor::About() {
-    //TODO: about section
+void QNotePadEditor::About_menu() {
+    about_->show();
 }
 
 void QNotePadEditor::onSettingsContextChanged(const SettingsContext &context) {

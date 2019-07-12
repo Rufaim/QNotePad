@@ -24,18 +24,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        about.cpp \
         main.cpp \
         q_note_pad_editor.cpp \
         settings.cpp \
         utils.cpp
 
 HEADERS += \
+        about.h \
         q_note_pad_editor.h \
         settings.h \
         settings_context.h \
         utils.h
 
 FORMS += \
+        about.ui \
         q_note_pad_editor.ui \
         settings.ui
 

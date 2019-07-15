@@ -210,7 +210,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>130</x>
@@ -251,6 +251,13 @@
       <widget class="QPushButton" name="applyButton">
        <property name="text">
         <string>Apply</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="defaultPushButton">
+       <property name="text">
+        <string>Default</string>
        </property>
       </widget>
      </item>

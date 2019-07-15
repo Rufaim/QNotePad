@@ -33,6 +33,7 @@ SOURCES += \
 HEADERS += \
         about.h \
         q_note_pad_editor.h \
+        qsettings_keys.h \
         settings.h \
         settings_context.h \
         utils.h

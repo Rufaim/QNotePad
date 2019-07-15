@@ -33,6 +33,7 @@ public slots:
 
     void ApplyChanges();
     void CancelChanges();
+    void DefaultButton();
 
 signals:
     void newContextApplied(const SettingsContext &context);

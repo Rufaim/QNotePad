@@ -3,8 +3,10 @@
 
 #include <QFontDialog>
 #include <QColorDialog>
+#include <QSettings>
 
 #include "utils.h"
+#include "qsettings_keys.h"
 
 Settings::Settings(QWidget *parent) :
     QFrame(parent),
@@ -97,6 +99,31 @@ void Settings::CancelChanges() {
     refreshAll();
 }
 
+void Settings::DefaultButton() {
+    QSettings settings(QSettingsKeys::organisation_name,QSettingsKeys::application_name_default);
+
+    QString font_family = settings.value(QSettingsKeys::ThemeKeys::font_key_).toString();
+    int font_size = settings.value(QSettingsKeys::ThemeKeys::font_point_size_key_).toInt();
+
+    QString text_color = settings.value(QSettingsKeys::ThemeKeys::text_color_key_).toString();
+    QString selection_color = settings.value(QSettingsKeys::ThemeKeys::selection_color_key_).toString();
+    QString editor_background_color = settings.value(QSettingsKeys::ThemeKeys::editor_background_color_key_).toString();
+    QString current_line_highlighting_selection_color = settings.value(QSettingsKeys::ThemeKeys::current_line_highlighting_selection_color_key_).toString();
+    bool checkbox_line_number = settings.value(QSettingsKeys::CheckboxesKeys::line_number_key).toBool();
+    bool checkbox_current_line_hihglight = settings.value(QSettingsKeys::CheckboxesKeys::current_line_hihglight_key).toBool();
+
+    current_context_.font = QFont(font_family,font_size);
+
+    current_context_.text_color = QColor(text_color);
+    current_context_.selection_color = QColor(selection_color);
+    current_context_.editor_background_color = QColor(editor_background_color);
+    current_context_.current_line_highlighting_selection_color = QColor(current_line_highlighting_selection_color);
+
+    current_context_.check_boxes_state.enable_line_number = checkbox_line_number;
+    current_context_.check_boxes_state.enable_current_line_hihglight = checkbox_current_line_hihglight;
+    refreshAll();
+}
+
 void Settings::init_settings_form() {
     current_context_.font.setFamily(current_context_.font.defaultFamily());
 
@@ -114,6 +141,7 @@ void Settings::init_settings_form() {
 
     connect(ui->applyButton,&QPushButton::clicked,this,&Settings::ApplyChanges);
     connect(ui->cancelButton,&QPushButton::clicked,this,&Settings::CancelChanges);
+    connect(ui->defaultPushButton,&QPushButton::clicked,this,&Settings::DefaultButton);
 }
 
 void Settings::refreshAll() {

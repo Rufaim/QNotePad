@@ -5,7 +5,8 @@
 
 namespace QSettingsKeys {
     static const QString organisation_name = "QNotePad";
-    static const QString application_name = "QNotePad";
+    static const QString application_name = "QNotePad_current";
+    static const QString application_name_default = "QNotePad_default";
 
     // settings keys
     namespace CheckboxesKeys {

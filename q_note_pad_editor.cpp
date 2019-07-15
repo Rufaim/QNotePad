@@ -87,6 +87,18 @@ void QNotePadEditor::init_settings_form() {
     settings_->setSettingsContext(init_context);
     onSettingsContextChanged(init_context);
 
+    QSettings settings_default(QSettingsKeys::organisation_name,QSettingsKeys::application_name_default);
+
+    settings_default.setValue(QSettingsKeys::ThemeKeys::font_key_,font.family());
+    settings_default.setValue(QSettingsKeys::ThemeKeys::font_point_size_key_,font.pointSize());
+    settings_default.setValue(QSettingsKeys::ThemeKeys::text_color_key_,pallete.text().color().name());
+    settings_default.setValue(QSettingsKeys::ThemeKeys::selection_color_key_,pallete.highlight().color().name());
+    settings_default.setValue(QSettingsKeys::ThemeKeys::editor_background_color_key_,pallete.base().color().name());
+    settings_default.setValue(QSettingsKeys::ThemeKeys::current_line_highlighting_selection_color_key_,QColor(Qt::yellow).lighter(100).name());
+
+    settings_default.setValue(QSettingsKeys::CheckboxesKeys::line_number_key,false);
+    settings_default.setValue(QSettingsKeys::CheckboxesKeys::current_line_hihglight_key,false);
+    settings_default.sync();
 }
 
 void QNotePadEditor::init_highlight_current_line() {
